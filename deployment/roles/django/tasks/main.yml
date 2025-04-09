@@ -4,9 +4,15 @@
     name: "python3-venv"
     state: "present"
 
-- name: "create and launch venv"
-  shell:
-    python3 -m venv envdg & chmod +x envdg/bin/activate & ./envdg/bin/activate
+- name: "create venv"
+  command:
+    cmd: python3 -m venv envdg
+    creates: envdg
+    chdir: /home/ubuntu
+
+- name: "launch venv"
+  command:
+    cmd: source envdg/bin/activate
   args:
     chdir: /home/ubuntu
 
