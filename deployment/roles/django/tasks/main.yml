@@ -6,7 +6,7 @@
 
 - name: "create and launch venv"
   shell:
-    python3 -m virtualenv envdg
+    python3 -m venv envdg
     source envdg/bin/activate
 
 
