@@ -1,17 +1,20 @@
 ---
 - name: "create and launch venv"
-  command:
-    cmd: "python3 -m venv envdg; source envdg/bin/activate"
+  shell:
+    python3 -m venv envdg
+    source envdg/bin/activate
 
 
 - name: "install django"
-  command:
-    cmd: "pip install django"
+  shell:
+    pip install django
 
 - name: "install website"
-  command:
-    cmd: "git clone https://github.com/Godot-dev/django-ansible"
+  git:
+    repo: "https://github.com/Godot-dev/django-ansible"
+    dest: /home/ubuntu/django-ansible
 
 - name: "launch website"
-  command:
-    cmd: "python3 mysite/manage.py runserver"
+  shell:
+    cd django-ansible/mysite
+    python3 manage.py runserver
