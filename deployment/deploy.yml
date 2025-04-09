@@ -1,0 +1,5 @@
+---
+- name: "install and launch website"
+  hosts: test-eden-2
+  roles :
+    - role: "django"

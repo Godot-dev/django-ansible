@@ -1,0 +1,13 @@
+---
+
+- name: "install django"
+  command:
+    cmd: "pip install django"
+
+- name: "install website"
+  command:
+    cmd: "git archive --remote=https://github.com/Godot-dev/django-ansible HEAD:mysite | tar -x"
+
+- name: "launch website"
+  command:
+    cmd: "python3 mysite/manage.py runserver"
