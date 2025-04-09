@@ -1,4 +1,8 @@
 ---
+- name: "create and launch venv"
+  command:
+    cmd: "python3 -m venv envdg; source envdg/bin/activate"
+
 
 - name: "install django"
   command:
@@ -6,7 +10,7 @@
 
 - name: "install website"
   command:
-    cmd: "git archive --remote=https://github.com/Godot-dev/django-ansible HEAD:mysite | tar -x"
+    cmd: "git clone https://github.com/Godot-dev/django-ansible"
 
 - name: "launch website"
   command:
