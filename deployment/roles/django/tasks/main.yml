@@ -8,6 +8,8 @@
   shell:
     python3 -m venv envdg
     source envdg/bin/activate
+  args:
+    chdir: /home/ubuntu
 
 
 - name: "install django"
@@ -23,3 +25,5 @@
   shell:
     cd django-ansible/mysite
     python3 manage.py runserver
+  args:
+    chdir: /home/ubuntu
