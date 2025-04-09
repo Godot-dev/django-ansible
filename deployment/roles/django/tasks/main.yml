@@ -1,4 +1,9 @@
 ---
+- name: "install python3 venv"
+  apt:
+    name: "python3-venv"
+    state: "present"
+
 - name: "create and launch venv"
   shell:
     python3 -m venv envdg
