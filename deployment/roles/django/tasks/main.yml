@@ -23,7 +23,6 @@
 
 - name: "launch website"
   shell:
-    cd django-ansible/mysite
-    /home/ubuntu/envdg/bin/python3 manage.py runserver 0.0.0.0:8000
+    nohup /home/ubuntu/envdg/bin/python3 manage.py runserver 0.0.0.0:8000
   args:
-    chdir: /home/ubuntu
+    chdir: /home/ubuntu/django-ansible/mysite
