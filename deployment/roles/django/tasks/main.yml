@@ -12,7 +12,9 @@
 
 - name: "install django"
   shell:
-    pip install django
+    ./pip install django
+  args:
+    chdir: /home/ubuntu/envdg/bin
 
 - name: "install website"
   git:
