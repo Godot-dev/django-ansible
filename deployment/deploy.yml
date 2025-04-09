@@ -3,4 +3,4 @@
   hosts: test-eden-2
   become: yes
   roles :
-    - role: "roles/django"
+    - role: "django"
