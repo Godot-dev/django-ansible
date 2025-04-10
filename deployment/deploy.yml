@@ -3,6 +3,7 @@
   hosts: django
   become: yes
   roles :
+    - role: "common"
     - role: "django"
 
 - name: "installation bdd"
