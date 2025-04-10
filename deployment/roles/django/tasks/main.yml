@@ -26,7 +26,7 @@
   ansible.builtin.blockinfile:
     path: /home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}/{{git_repo_directory}}/settings.py
     block: |
-      DATABASES[default] = {
+      DATABASES['default'] = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "{{db_name}}",
         "USER": "{{db_user}}",
