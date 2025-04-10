@@ -9,6 +9,7 @@
       - postgresql 
       - postgresql-contrib
       - python3-pip
+      - acl
     state: "present"
 
 - name: "install psycopg2 (postgresql python library)"
