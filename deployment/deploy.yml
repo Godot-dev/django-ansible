@@ -1,7 +1,4 @@
 ---
-- name: Importer les variables du rôle `common`
-  import_role:
-    name: common
 
 - name: "install and launch website"
   hosts: django
@@ -18,6 +15,9 @@
 - name: "launch website"
   hosts: django
   tasks:
+    - name: Importer les variables du rôle `common`
+      import_role:
+        name: common
     - name: "make db migrations"
       shell:
         shell:
