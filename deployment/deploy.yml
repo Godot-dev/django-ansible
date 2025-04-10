@@ -1,9 +1,12 @@
 ---
+- name: Importer les variables du rôle `common`
+  import_role:
+    name: common
+
 - name: "install and launch website"
   hosts: django
   become: yes
   roles :
-    - role: "common"
     - role: "django"
 
 - name: "installation bdd"
