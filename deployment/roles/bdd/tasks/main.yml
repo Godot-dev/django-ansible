@@ -15,7 +15,6 @@
 - name: "Create a new database"
   community.postgresql.postgresql_db:
     name: "{{db_name}}"
-    comment: "My test DB"
 
 - name: "Connect to database, create django user, and grant access to database and products table"
   community.postgresql.postgresql_user:
