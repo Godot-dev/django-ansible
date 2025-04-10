@@ -7,7 +7,7 @@
 - name: "create venv"
   command:
     cmd: python3 -m venv {{venv_name}}
-    creates: {{venv_name}}
+    creates: "{{venv_name}}"
     chdir: /home/{{vm_user}}
 
 - name: "install django"
