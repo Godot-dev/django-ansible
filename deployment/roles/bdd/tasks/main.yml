@@ -1,7 +1,9 @@
 ---
 - name: "install postgresql"
   apt:
-    name: "postgresql postgresql-contrib"
+    pkg: 
+      - postgresql 
+      - postgresql-contrib
     state: "present"
 
 - name: "activation postgresql"
