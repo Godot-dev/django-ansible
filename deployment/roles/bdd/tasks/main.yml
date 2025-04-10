@@ -1,8 +1,8 @@
 ---
-- name: "install dependencies"
+- name: "upgrade and update apt"
   apt:
-    upgrade: yes
-    
+    upgrade: full
+
 - name: "install dependencies"
   apt:
     pkg: 
