@@ -20,6 +20,7 @@
   git:
     repo: "{{git_repo_link}}"
     dest: /home/{{vm_user}}/{{git_repo_name}}
+    force: yes
 
 - name: "update django settings.py with db informations"
   ansible.builtin.blockinfile:
