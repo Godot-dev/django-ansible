@@ -1,9 +1,10 @@
 ---
-- name: "install postgresql"
+- name: "install dependencies"
   apt:
     pkg: 
       - postgresql 
       - postgresql-contrib
+      - python3-pip
     state: "present"
 
 - name: "install psycopg2 (postgresql python library)"
