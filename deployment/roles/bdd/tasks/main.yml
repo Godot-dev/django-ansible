@@ -17,6 +17,7 @@
     pip install psycopg2-binary
 
 - name: Set listen parameter
+  become_user: postgres
   community.postgresql.postgresql_set:
     name: "listen_addresses"
     value: "*"
