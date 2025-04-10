@@ -5,11 +5,6 @@
     state: "present"
     upgrade: "yes"
 
-- name: Set port
-  community.postgresql.postgresql_set:
-    name: port
-    value: {{db_port}}
-
 - name: "activation postgresql"
   service:
     name: "postgresql"
