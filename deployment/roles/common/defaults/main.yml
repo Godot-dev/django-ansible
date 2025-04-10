@@ -1,0 +1,26 @@
+---
+# vm
+vm_user: "ubuntu"
+
+# git
+git_repo_link: "https://github.com/Godot-dev/django-ansible"
+git_repo_name: "django-ansible"
+git_repo_directory: "mysite"
+
+
+# base de données
+db_name: "bdd1"
+db_user: "godot"
+db_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36663834663231626536386238623839633164613631636263616231666639363366633362376163
+          3737636266333836346566643164613764616336633461380a363233656238303032653435316637
+          66313133623335663738386237306336663561303536363133363435623438656265313064313665
+          3233666438623139610a373261623461613738373333666433336535653964366566613635613438
+          3839
+db_host: "10.0.103.232"
+db_port: "5432"
+
+# django
+venv_name: "django"
+site_path: "/home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}"

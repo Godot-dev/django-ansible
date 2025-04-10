@@ -20,9 +20,3 @@
   git:
     repo: "https://github.com/Godot-dev/django-ansible"
     dest: /home/ubuntu/django-ansible
-
-- name: "launch website"
-  shell:
-    nohup /home/ubuntu/envdg/bin/python3 manage.py runserver 0.0.0.0:8000 &
-  args:
-    chdir: /home/ubuntu/django-ansible/mysite

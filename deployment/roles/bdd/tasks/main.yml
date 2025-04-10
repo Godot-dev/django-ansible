@@ -1,0 +1,42 @@
+---
+- name: "install postgresql"
+  apt:
+    name: "postgresql postgresql-contrib"
+    state: "present"
+    upgrade: "yes"
+
+- name: Set port
+  community.postgresql.postgresql_set:
+    name: port
+    value: {{db_port}}
+
+- name: "activation postgresql"
+  service:
+    name: "postgresql"
+    state: "started"
+    enabled: yes
+
+- name: "Create a new database"
+  community.postgresql.postgresql_db:
+    name:"{{bdd1}}"
+    comment: "My test DB"
+
+- name: "Connect to database, create django user, and grant access to database and products table"
+  community.postgresql.postgresql_user:
+    login_db: "{{db_name}}"
+    name: "{{db_user}}"
+    password: "{{db_password}}"
+    expires: "Jan 31 2027"
+
+- name: "update settings.py"
+  ansible.builtin.blockinfile:
+    path: /home/ubuntu/django-ansible/my-site/my-site/settings.py
+    block: |
+      DATABASES[default] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "{{db_name}}",
+        "USER": "{{db_user}}",
+        "PASSWORD": "{{db_password}}",
+        "HOST": "{{db_host}}",
+        "PORT": "{{db_port}}",
+      }

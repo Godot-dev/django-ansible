@@ -1,6 +1,19 @@
 ---
 - name: "install and launch website"
-  hosts: test-eden-2
+  hosts: django
   #become: yes
   roles :
     - role: "django"
+
+- name: "installation bdd"
+  hosts: bdd
+  #become: yes
+  roles :
+    - role: "bdd"
+
+- name: "launch website"
+  hosts: django
+  shell:
+    nohup /home/ubuntu/envdg/bin/python3 manage.py runserver 0.0.0.0:8000 &
+  args:
+    chdir: /home/ubuntu/django-ansible/mysite
