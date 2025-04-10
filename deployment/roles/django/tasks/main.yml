@@ -6,17 +6,17 @@
 
 - name: "create venv"
   command:
-    cmd: python3 -m venv envdg
-    creates: envdg
-    chdir: /home/ubuntu
+    cmd: python3 -m venv {{venv_name}}
+    creates: {{venv_name}}
+    chdir: /home/{{vm_user}}
 
 - name: "install django"
   shell:
     ./pip install django
   args:
-    chdir: /home/ubuntu/envdg/bin
+    chdir: /home/{{vm_user}}/{{venv_name}}/bin
 
 - name: "install website"
   git:
-    repo: "https://github.com/Godot-dev/django-ansible"
-    dest: /home/ubuntu/django-ansible
+    repo: "{{git_repo_link}}"
+    dest: /home/{{vm_user}}/{{git_repo_name}}
