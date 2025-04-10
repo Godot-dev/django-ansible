@@ -13,7 +13,9 @@
 
 - name: "launch website"
   hosts: django
-  shell:
-    nohup /home/ubuntu/envdg/bin/python3 manage.py runserver 0.0.0.0:8000 &
-  args:
-    chdir: /home/ubuntu/django-ansible/mysite
+  tasks:
+    - name: "launch website"
+      shell:
+        nohup /home/ubuntu/envdg/bin/python3 manage.py runserver 0.0.0.0:8000 &
+      args:
+        chdir: /home/ubuntu/django-ansible/mysite
