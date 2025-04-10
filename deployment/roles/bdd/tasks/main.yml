@@ -1,6 +1,10 @@
 ---
 - name: "install dependencies"
   apt:
+    upgrade: yes
+    
+- name: "install dependencies"
+  apt:
     pkg: 
       - postgresql 
       - postgresql-contrib
