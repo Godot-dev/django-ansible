@@ -37,7 +37,7 @@
 
 - name: "update settings.py"
   ansible.builtin.blockinfile:
-    path: /home/ubuntu/django-ansible/my-site/my-site/settings.py
+    path: /home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}/{{git_repo_directory}}/settings.py
     block: |
       DATABASES[default] = {
         "ENGINE": "django.db.backends.postgresql",
