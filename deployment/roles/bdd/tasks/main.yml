@@ -3,7 +3,6 @@
   apt:
     name: "postgresql postgresql-contrib"
     state: "present"
-    upgrade: "yes"
 
 - name: "activation postgresql"
   service:
