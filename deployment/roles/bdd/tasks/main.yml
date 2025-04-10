@@ -22,6 +22,16 @@
     name: "listen_addresses"
     value: "*"
 
+- name: Autoriser l'accès PostgreSQL depuis le serveur django
+  become_user: postgres
+  community.postgresql.postgresql_pg_hba:
+    dest: /etc/postgresql/14/main/pg_hba.conf
+    contype: host
+    users: all
+    databases: all
+    address: "{{djangoserver_ip}}/32"
+    #method: md5
+
 - name: "activation postgresql"
   service:
     name: "postgresql"
