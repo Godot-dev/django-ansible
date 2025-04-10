@@ -22,13 +22,13 @@
     enabled: yes
 
 - name: "Create a new database"
+  become_user: postgres
   community.postgresql.postgresql_db:
-    become_user: postgres
     name: "{{db_name}}"
 
 - name: "Connect to database, create django user, and grant access to database and products table"
+  become_user: postgres
   community.postgresql.postgresql_user:
-    become_user: postgres
     login_db: "{{db_name}}"
     name: "{{db_user}}"
     password: "{{db_password}}"
