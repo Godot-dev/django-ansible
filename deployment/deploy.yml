@@ -15,17 +15,16 @@
 - name: "launch website"
   hosts: django
   tasks:
-    - name: Importer les variables du rôle `common`
+    - name: import variables
       import_role:
         name: common
     - name: "make db migrations"
       shell:
-        shell:
-          nohup /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py runserver 0.0.0.0:8000 &
-        args:
-          chdir: /home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}
+        /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py migrate
+      args:
+        chdir: /home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}
 
-    - name: "launch website"
+    - name: "runserver"
       shell:
         nohup /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py runserver 0.0.0.0:8000 &
       args:
