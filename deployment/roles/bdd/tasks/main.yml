@@ -6,6 +6,10 @@
       - postgresql-contrib
     state: "present"
 
+- name: "install psycopg2 (postgresql python library)"
+  shell:
+    pip install psycopg2-binary
+
 - name: "activation postgresql"
   service:
     name: "postgresql"
