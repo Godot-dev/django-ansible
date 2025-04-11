@@ -9,7 +9,6 @@
 - name: "installation bdd"
   hosts: bdd
   become: yes
-  become_user: postgres
   roles :
     - role: "bdd"
 
