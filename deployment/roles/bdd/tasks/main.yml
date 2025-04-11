@@ -17,13 +17,11 @@
     pip install psycopg2-binary
 
 - name: Set listen parameter
-  become_user: postgres
   community.postgresql.postgresql_set:
     name: "listen_addresses"
     value: "*"
 
 - name: Autoriser l'accès PostgreSQL depuis le serveur django
-  become_user: postgres
   community.postgresql.postgresql_pg_hba:
     dest: /etc/postgresql/14/main/pg_hba.conf
     contype: host
@@ -39,12 +37,10 @@
     enabled: yes
 
 - name: "Create a new database"
-  become_user: postgres
   community.postgresql.postgresql_db:
     name: "{{db_name}}"
 
 - name: "Connect to database, create django user, and grant access to database and products table"
-  become_user: postgres
   community.postgresql.postgresql_user:
     login_db: "{{db_name}}"
     name: "{{db_user}}"
