@@ -1,7 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from models import *
 
 
 # Create your views here.
 def hello(request):
-    return HttpResponse('<h1>Hello World !</h1>')
+    context = {"personnes": Person.objects.all()}
+    return render(request, 'app1/index.html', context)
+
+def submit_form(request):
+    p = Person.objects.create(name=request.POST.get('name'), age=request.POST.get('age'))
+    p.save()
+    return hello(request)
