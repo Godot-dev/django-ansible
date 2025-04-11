@@ -50,3 +50,13 @@
     name: "{{db_user}}"
     password: "{{db_password}}"
     expires: "Jan 31 2027"
+
+- name: give rights to db_user on all tables
+  community.postgresql.postgresql_privs:
+    db: "{{ db_name }}"
+    roles: "{{ db_user }}"
+    type: table
+    objs: ALL_IN_SCHEMA
+    schema: public
+    privs: SELECT,INSERT,UPDATE,DELETE
+    state: present
