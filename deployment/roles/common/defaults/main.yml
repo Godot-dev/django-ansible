@@ -11,7 +11,7 @@ git_repo_directory: "mysite"
 
 # base de données
 db_name: "bdd1"
-db_user: "godot"
+db_user: "ubuntu"
 db_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           36663834663231626536386238623839633164613631636263616231666639363366633362376163
