@@ -19,6 +19,7 @@
       import_role:
         name: common
     - name: "make db migrations"
+      become: yes
       shell:
         /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py migrate
       args:
