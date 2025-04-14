@@ -1,33 +1,32 @@
 ---
+- name: "mandatory variables verification"
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: verify that variables 'install' et 'launch' are defined
+      assert:
+        that:
+          - install is defined
+          - launch is defined
+        fail_msg: "variables 'install' et 'launch'are mandatory. Use -e install=true launch=false"
 
-- name: "install and launch website"
+- name: "website installation"
   hosts: django
   become: yes
+  when: install == true
   roles :
-    - role: "django"
+    - role: "install-web"
 
-- name: "installation bdd"
+- name: "database installation"
   hosts: bdd
   become: yes
+  when: install == true
   roles :
-    - role: "bdd"
+    - role: "install-db"
 
 - name: "launch website"
   hosts: django
-  tasks:
-    - name: import variables
-      import_role:
-        name: common
-    - name: "make db migrations"
-      become: yes
-      shell: |
-        /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py makemigrations 
-        /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py migrate
-      args:
-        chdir: /home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}
-
-    - name: "runserver"
-      shell:
-        nohup /home/{{vm_user}}/{{venv_name}}/bin/python3 manage.py runserver 0.0.0.0:8000 &
-      args:
-        chdir: /home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}
+  when: launch == true
+  roles :
+    - role: "launch-web"
+    

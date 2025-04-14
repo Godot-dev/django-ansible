@@ -1,15 +1,5 @@
 ---
-# vm
-vm_user: "ubuntu"
-
-
-# git
-git_repo_link: "https://github.com/Godot-dev/django-ansible"
-git_repo_name: "django-ansible"
-git_repo_directory: "mysite"
-
-
-# base de données
+# database
 db_name: "bdd1"
 db_user: "ubuntu"
 db_password: !vault |
@@ -21,8 +11,3 @@ db_password: !vault |
           3839
 db_host: "10.0.103.232"
 db_port: "5432"
-
-# django
-djangoserver_ip: "10.0.103.167"
-venv_name: "django"
-site_path: "/home/{{vm_user}}/{{git_repo_name}}/{{git_repo_directory}}"

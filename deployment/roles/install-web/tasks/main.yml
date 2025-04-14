@@ -1,0 +1,45 @@
+---
+- name: install python3 venv
+  apt:
+    name: "python3-venv"
+    state: "present"
+
+- name: create venv
+  command:
+    cmd: python3 -m venv {{venv_name}}
+    creates: "{{venv_name}}"
+    chdir: /home/{{ansible_user}}
+
+- name: install django & psycopg2 in the venv
+  shell:
+    "{{venv_path}}/pip install -r requirements.txt"
+  args:
+    chdir: "{{manage_path}}"
+
+- name: install website
+  git:
+    repo: "{{git_repo_link}}"
+    dest: /home/{{ansible_user}}/{{git_repo_name}}
+    force: yes
+
+- name: update django settings.py with db informations
+  ansible.builtin.blockinfile:
+    path: "{{manage_path}}/{{git_repo_directory}}/settings.py"
+    block: |
+      DATABASES['default'] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "{{db_name}}",
+        "USER": "{{db_user}}",
+        "PASSWORD": "{{db_password}}",
+        "HOST": "{{db_host}}",
+        "PORT": "{{db_port}}",
+      }
+
+- name: create django superuser admin
+  shell: |
+    export DJANGO_SUPERUSER_USERNAME=admin
+    export DJANGO_SUPERUSER_EMAIL=admin@example.com
+    export DJANGO_SUPERUSER_PASSWORD=adminpassword
+    "{{venv_path}}/python3 manage.py createsuperuser --noinput"
+  args:
+    chdir: "{{manage_path}}"

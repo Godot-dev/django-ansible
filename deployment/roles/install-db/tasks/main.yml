@@ -1,9 +1,9 @@
 ---
-- name: "upgrade and update apt"
+- name: upgrade and update apt
   apt:
     upgrade: full
 
-- name: "install dependencies"
+- name: install dependencies
   apt:
     pkg: 
       - postgresql 
@@ -12,7 +12,7 @@
       - acl
     state: "present"
 
-- name: "install psycopg2 (postgresql python library)"
+- name: install psycopg2 (postgresql python library)
   shell:
     pip install psycopg2-binary
 
@@ -22,28 +22,29 @@
     name: "listen_addresses"
     value: "*"
 
-- name: Autoriser l'accès PostgreSQL depuis le serveur django
+- name: Authorize PostgreSQL Access from django server(s)
   become_user: postgres
   community.postgresql.postgresql_pg_hba:
     dest: /etc/postgresql/14/main/pg_hba.conf
     contype: host
     users: all
     databases: all
-    address: "{{djangoserver_ip}}/32"
+    address: "{{hostvars[item]['ansible_host']}}/32"
+  loop: "{{groups['django']}}"
     #method: md5
 
-- name: "activation postgresql"
+- name: activation postgresql
   service:
     name: "postgresql"
     state: "restarted"
     enabled: yes
 
-- name: "Create a new database"
+- name: Create a new database
   become_user: postgres
   community.postgresql.postgresql_db:
     name: "{{db_name}}"
 
-- name: "Connect to database, create django user, and grant access to database and products table"
+- name: Connect to database, create django user, and grant access to database and products table
   become_user: postgres
   community.postgresql.postgresql_user:
     login_db: "{{db_name}}"

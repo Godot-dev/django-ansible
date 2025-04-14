@@ -1,0 +1,14 @@
+---
+- name: "make db migrations"
+  become: yes
+  shell: |
+    {{venv_path}}/python3 manage.py makemigrations 
+    {{venv_path}}/python3 manage.py migrate
+  args:
+    chdir: "{{manage_path}}"
+
+- name: "runserver"
+  shell:
+    nohup {{venv_path}}/python3 manage.py runserver 0.0.0.0:8000 &
+  args:
+    chdir: "{{manage_path}}"
