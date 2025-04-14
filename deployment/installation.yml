@@ -1,0 +1,15 @@
+---
+- name: "website installation"
+  hosts: django
+  become: yes
+  roles :
+    - role: "install-web"
+
+- name: "database installation"
+  hosts: bdd
+  become: yes
+  roles :
+    - role: "install-db"
+
+
+    
