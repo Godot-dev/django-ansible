@@ -9,6 +9,7 @@
 
 - name: "runserver"
   shell:
-    nohup {{venv_path}}/python3 manage.py runserver 0.0.0.0:8000 &
+    #nohup {{venv_path}}/python3 manage.py runserver 0.0.0.0:8000 &
+    "{{venv_path}}/python3 manage.py runserver 0.0.0.0:8000"
   args:
     chdir: "{{manage_path}}"
