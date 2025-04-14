@@ -25,14 +25,15 @@
 - name: update django settings.py with db informations
   ansible.builtin.blockinfile:
     path: "{{manage_path}}/{{git_repo_directory}}/settings.py"
+    # We need the variables of the db group to correctly configure the link between the database and the website
     block: |
       DATABASES['default'] = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "{{db_name}}",
-        "USER": "{{db_user}}",
-        "PASSWORD": "{{db_password}}",
-        "HOST": "{{db_host}}",
-        "PORT": "{{db_port}}",
+        "NAME": "{{groupvars[db]['db_name']}}",
+        "USER": "{{groupvars[db]['db_user']}}",
+        "PASSWORD": "{{groupvars[db]['db_password']}}",
+        "HOST": "{{groupvars[db]['db_host']}}",
+        "PORT": "{{groupvars[db]['db_port']}}",
       }
 
 - name: create django superuser admin
