@@ -29,10 +29,10 @@
     block: |
       DATABASES['default'] = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "{{db_vars['db_name']}}"
-        "USER": "{{db_vars['db_user'] }}"
-        "PASSWORD": "{{db_vars['db_password'] }}"
-        "HOST": "{{db_vars['db_host'] }}"
+        "NAME": "{{db_vars['db_name']}}",
+        "USER": "{{db_vars['db_user'] }}",
+        "PASSWORD": "{{db_vars['db_password'] }}",
+        "HOST": "{{db_vars['db_host'] }}",
         "PORT": "{{db_vars['db_port'] }}"
       }
 
