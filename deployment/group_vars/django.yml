@@ -21,3 +21,7 @@ dsu_password: !vault |
           6339323964333931310a396435303836353466663834353630373735376663366339353464663763
           63306437663165613934653533363232343061323237343864336162326363353933
 dsu_email: "eden.porte@consultants.solutec.fr"
+
+# Link to db variables
+# Represents the variables of the first host in the db group
+db_vars: "{{hostvars[groups['db'][0]]}}"
