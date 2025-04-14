@@ -29,11 +29,11 @@
     block: |
       DATABASES['default'] = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "{{groups['db'][0]['db_name']}}",
-        "USER": "{{groups['db'][0]['db_user']}}",
-        "PASSWORD": "{{groups['db'][0]['db_password']}}",
-        "HOST": "{{groups['db'][0]['db_host']}}",
-        "PORT": "{{groups['db'][0]['db_port']}}",
+        "NAME": "{{ hostvars[groups['db'][0]]['db_name'] }}"
+        "USER": "{{ hostvars[groups['db'][0]]['db_user'] }}"
+        "PASSWORD": "{{ hostvars[groups['db'][0]]['db_password'] }}"
+        "HOST": "{{ hostvars[groups['db'][0]]['db_host'] }}"
+        "PORT": "{{ hostvars[groups['db'][0]]['db_port'] }}"
       }
 
 - name: create django superuser admin
