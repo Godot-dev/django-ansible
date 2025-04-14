@@ -10,17 +10,17 @@
     creates: "{{venv_name}}"
     chdir: /home/{{ansible_user}}
 
-- name: install django & psycopg2 in the venv
-  shell:
-    "{{venv_path}}/pip install -r requirements.txt"
-  args:
-    chdir: "{{manage_path}}"
-
 - name: install website
   git:
     repo: "{{git_repo_link}}"
     dest: /home/{{ansible_user}}/{{git_repo_name}}
     force: yes
+
+- name: install django & psycopg2 in the venv
+  shell:
+    "{{venv_path}}/pip install -r requirements.txt"
+  args:
+    chdir: "{{manage_path}}"
 
 - name: update django settings.py with db informations
   ansible.builtin.blockinfile:
