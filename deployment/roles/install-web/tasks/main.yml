@@ -41,6 +41,6 @@
     export DJANGO_SUPERUSER_USERNAME={{dsu_username}}
     export DJANGO_SUPERUSER_EMAIL={{dsu_email}}
     export DJANGO_SUPERUSER_PASSWORD={{dsu_password}}
-    "{{venv_path}}/python3 manage.py createsuperuser --noinput"
+    {{venv_path}}/python3 manage.py createsuperuser --noinput
   args:
     chdir: "{{manage_path}}"
