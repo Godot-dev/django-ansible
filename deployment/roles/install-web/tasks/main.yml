@@ -36,11 +36,30 @@
         "PORT": "{{db_vars['db_port'] }}"
       }
 
+- name: Check if superuser already exists
+  shell: >
+    {{venv_path}}/python3 manage.py shell -c
+    "from django.contrib.auth import get_user_model;
+    exit(0) if get_user_model().objects.filter(username='{{ dsu_username }}').exists() else exit(1)"
+  args:
+    chdir: "{{manage_path}}"
+  register: superuser_check
+
+
+  failed_when: false
+  changed_when: false
+
+- name: Inform that superuser creation is skipped
+  debug:
+    msg: "The superuser '{{dsu_username}}' already exists. The next task will be skipped"
+  when: superuser_check.rc == 0
+
 - name: create django superuser admin
   shell: |
     export DJANGO_SUPERUSER_USERNAME={{dsu_username}}
     export DJANGO_SUPERUSER_EMAIL={{dsu_email}}
     export DJANGO_SUPERUSER_PASSWORD={{dsu_password}}
     {{venv_path}}/python3 manage.py createsuperuser --noinput
+  when: superuser_check.rc != 0 # rc means return code
   args:
     chdir: "{{manage_path}}"
