@@ -1,6 +1,5 @@
 ---
 - name: "launch website"
   hosts: django
-  when: launch == true
   roles :
     - role: "launch-web"

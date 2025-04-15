@@ -16,7 +16,7 @@
     dest: /home/{{ansible_user}}/{{git_repo_name}}
     force: yes
 
-- name: install django & psycopg2 in the venv
+- name: install pip requirements
   shell:
     "{{venv_path}}/pip install -r requirements.txt"
   args:
