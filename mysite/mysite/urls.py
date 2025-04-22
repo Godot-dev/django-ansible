@@ -21,5 +21,6 @@ from app1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('submit/', views.submit_form)
+    path('submit/', views.submit_form),
+    path('register/', views.register)
 ]

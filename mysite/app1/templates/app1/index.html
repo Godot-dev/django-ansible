@@ -1,29 +1,25 @@
-# listings/templates/listings/hello.html
+{% extends 'app1/base.html' %}
 
-<html>
-    <head><title>Merchex</title></head>
-    <body>
-        <h1>Hello Django !</h1>
-        <p>Mes groupes préférés sont :</p>
-        <h2>Formulaire utilisateur</h2>
+{% block content %}
+<h1>Hello Django !</h1>
+<h2>Formulaire utilisateur</h2>
 
-        <form action="/submit/" method="post">
-            {% csrf_token %}
-            <label for="name">Nom :</label>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="age">Âge :</label>
-            <input type="number" id="age" name="age" required><br><br>
-         </select><br><br>
+<form action="/submit/" method="post">
+    {% csrf_token %}
+    <label for="name">Nom :</label>
+    <input type="text" id="name" name="name" required><br><br>
+    <label for="age">Âge :</label>
+    <input type="number" id="age" name="age" required><br><br>
+    </select><br><br>
 
-            <button type="submit">Valider</button>
-        </form>
-        <!-- TODO : liste des personnes -->
+    <button type="submit">Valider</button>
+    </form>
+    <!-- TODO : liste des personnes -->
 
-        <p>Voici la liste des personnes ajoutées à la base :</p>
-        <ul>
-            {% for p in personnes %}
-            <li>{{ p.name }}   {{ p.age }}</li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+    <p>Voici la liste des personnes ajoutées à la base :</p>
+    <ul>
+        {% for p in personnes %}
+        <li>{{ p.name }}   {{ p.age }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

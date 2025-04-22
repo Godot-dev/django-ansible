@@ -1,20 +1,25 @@
 ---
-- name: install python3 venv
+- name: install packages dependencies
   apt:
-    name: "python3-venv"
-    state: "present"
-
-- name: create venv
-  command:
-    cmd: python3 -m venv {{venv_name}}
-    creates: "{{venv_name}}"
-    chdir: /home/{{ansible_user}}
+    pkg: 
+      - python3-venv
+      - nodejs 
+      - npm
+    state: present
 
 - name: install website
   git:
     repo: "{{git_repo_link}}"
     dest: /home/{{ansible_user}}/{{git_repo_name}}
     force: yes
+
+# BACKEND
+
+- name: create venv
+  command:
+    cmd: python3 -m venv {{venv_name}}
+    creates: "{{venv_name}}"
+    chdir: /home/{{ansible_user}}
 
 - name: install pip requirements
   shell:
@@ -63,3 +68,10 @@
   when: superuser_check.rc != 0 # rc means return code
   args:
     chdir: "{{manage_path}}"
+
+# FRONTEND
+- name: install vuejs
+    shell:
+      npm install -g @vue/cli
+
+  
