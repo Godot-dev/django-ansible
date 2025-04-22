@@ -71,7 +71,7 @@
 
 # FRONTEND
 - name: install vuejs
-    shell:
-      npm install -g @vue/cli
+  shell: 
+    npm install -g @vue/cli
 
   
