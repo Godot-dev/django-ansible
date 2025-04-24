@@ -30,3 +30,7 @@ def register(request):
         form = UserCreationForm()  
     context['form'] = form
     return render(request, 'app1/register.html', context)  
+
+def api_person_list(request):
+    persons = Person.objects.all()
+    

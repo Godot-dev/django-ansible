@@ -10,6 +10,7 @@ venv_name: "django"
 site_path: "/home/{{ansible_user}}/{{git_repo_name}}/{{git_repo_directory}}"
 venv_path: /home/{{ansible_user}}/{{venv_name}}/bin
 manage_path: /home/{{ansible_user}}/{{git_repo_name}}/{{git_repo_directory}}
+front_path: "{{manage_path}}-front"
 
 # django superuser
 dsu_username: admin
