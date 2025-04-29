@@ -8,6 +8,8 @@ class Person(models.Model):
 class Gare(models.Model):
     id = models.CharField(max_length=100, primary_key=True)
     name = models.CharField(max_length=100)
+    owner = models.ForeignKey('auth.User', related_name='gares', on_delete=models.CASCADE, default=None, null=True)
+
     
 
 
