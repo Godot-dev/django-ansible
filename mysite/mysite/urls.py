@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('submit/', views.submit_form),
-    path('register/', views.register),
+    path('api/register/', views.register),
     path('api/', include(router.urls)),
     path('api-token-auth/', obtain_auth_token),
     path('api/login/', views.user_login),

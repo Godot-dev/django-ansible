@@ -8,16 +8,18 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
 }
 
-.account-form{
-  height: 100%;
+router-view{
+  flex: 1;
   display: flex;
-  justify-content: center; /* Centre horizontalement */
-  align-items: center;     /* Centre verticalement */
-  align-content: center;
-  flex-direction: column;
 }
+
 </style>
 <script setup>
 import HeaderComponent from "@/components/HeaderComponent.vue";

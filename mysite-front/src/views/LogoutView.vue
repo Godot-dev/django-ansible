@@ -6,6 +6,7 @@
 import { onMounted, inject } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import {useLinksStore} from "@/stores/links";
 
 const API_URL = inject('API_URL') // ou utilise ton propre système de config
 const router = useRouter()
@@ -17,6 +18,7 @@ onMounted(async () => {
       withCredentials: true
     })
     console.log('Déconnecté avec succès')
+    useLinksStore().updateLinks(false) // update the error links
   } catch (error) {
     console.error('Erreur de déconnexion', error)
   } finally {

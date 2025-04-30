@@ -1,10 +1,10 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, QueryDict
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
@@ -24,19 +24,15 @@ def submit_form(request):
     return redirect("/")
 
   
-def register(request):  
-    context = {}
-    if request.method == 'POST':  
-        form = UserCreationForm(request.POST)  
-        if form.is_valid():  
-            form.save()  
-            context['message'] = "Account created successfully"
-        else:
-            context['message'] = "Error ! The account has not been created"
-    else:
-        form = UserCreationForm()  
-    context['form'] = form
-    return render(request, 'app1/register.html', context)  
+def register(request):
+    data = json.loads(request.body)
+    qdict = QueryDict('', mutable=True)
+    qdict.update(data)
+    form = UserCreationForm(qdict)
+    if form.is_valid():
+        form.save()
+        return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "failed"}, status=400)
 
 
 
@@ -68,21 +64,24 @@ def user_login(request):
         return JsonResponse({"status": "success"})
     else:
         # Return an 'invalid login' error message.
-        return JsonResponse({"status": "failed"})
+        return JsonResponse({"status": "failed"}, status=400)
 
 @require_POST
-@login_required
+@csrf_exempt
 def user_logout(request):
     logout(request)
-    return JsonResponse({"status": "success"})
+    response = JsonResponse({"status": "success"})
+    response.delete_cookie('sessionid')
+    return response
 
-@login_required
+@csrf_exempt
 def current_user(request):
     user = request.user
     if user.is_authenticated:
+        print(user.username)
         return JsonResponse({'username': user.username})
     else:
-        return JsonResponse({'username': None})
+        return JsonResponse({})
 @ensure_csrf_cookie
 def set_csrf_cookie(request):
     return JsonResponse({'message': 'CSRF cookie set'})
