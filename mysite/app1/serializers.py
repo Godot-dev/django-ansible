@@ -4,9 +4,9 @@ from app1.models import *
 from rest_framework import serializers # type: ignore
 
 
-class GareSerializer(serializers.ModelSerializer):
+class StationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gare
+        model = Station
         fields = '__all__'
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -18,3 +18,14 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username']
+
+
+class JourneySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Journey
+        fields = '__all__'
+
+class HasJourneySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HasJourney
+        fields = '__all__'

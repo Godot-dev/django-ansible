@@ -24,6 +24,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register('persons', views.PersonViewSet)
+router.register('stations', views.StationViewSet, basename='station')
+router.register('journeys', views.JourneyViewSet, basename='journey')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,4 +38,5 @@ urlpatterns = [
     path('api/logout/', views.user_logout, name='logout'),
     path('api/login-set-cookie/', views.set_csrf_cookie, name='set-csrf-cookie'),
     path('api/current-user/', views.current_user, name='current-user'),
+    path('api/autocomplete/', views.autocomplete, name='current-user'),
 ]

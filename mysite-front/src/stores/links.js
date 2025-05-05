@@ -9,10 +9,12 @@ export const useLinksStore = defineStore('linksStore', {
         let init = []
         init.push(pushLink('Home', '/'));
         init.push(pushLink('About', '/about'));
-        return { links: init, init: init };
+        return { links: init, init: init, isUserAuthenticated: false, username:undefined };
     },
     actions: {
-        updateLinks(isUserAuthenticated) {
+        updateLinks(isUserAuthenticated, username=undefined) {
+            this.isUserAuthenticated = isUserAuthenticated;
+            this.username = username;
             this.links = [...this.init]; // copy the content of this.init in this.links : reinitialize links
             if(isUserAuthenticated) {
                 this.links.push(pushLink('Dashboard', '/dashboard'));

@@ -1,14 +1,14 @@
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 import json
+
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, QueryDict
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_POST
 from rest_framework import viewsets, permissions
-from rest_framework.response import Response
-from app1.models import *
+
+from app1.functions import ask_sncf
 from app1.serializers import *
 
 
@@ -18,12 +18,13 @@ def index(request):
     print(context)
     return render(request, 'app1/index.html', context)
 
+
 def submit_form(request):
     p = Person.objects.create(name=request.POST.get('name'), age=request.POST.get('age'))
     p.save()
     return redirect("/")
 
-  
+
 def register(request):
     data = json.loads(request.body)
     qdict = QueryDict('', mutable=True)
@@ -35,10 +36,10 @@ def register(request):
     return JsonResponse({"status": "failed"}, status=400)
 
 
-
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -47,6 +48,28 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class StationViewSet(viewsets.ModelViewSet):
+    serializer_class = StationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Station.objects.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class JourneyViewSet(viewsets.ModelViewSet):
+    serializer_class = JourneySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Journey.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 @require_POST
@@ -66,6 +89,7 @@ def user_login(request):
         # Return an 'invalid login' error message.
         return JsonResponse({"status": "failed"}, status=400)
 
+
 @require_POST
 @csrf_exempt
 def user_logout(request):
@@ -73,6 +97,7 @@ def user_logout(request):
     response = JsonResponse({"status": "success"})
     response.delete_cookie('sessionid')
     return response
+
 
 @csrf_exempt
 def current_user(request):
@@ -82,6 +107,17 @@ def current_user(request):
         return JsonResponse({'username': user.username})
     else:
         return JsonResponse({})
+
+
 @ensure_csrf_cookie
 def set_csrf_cookie(request):
     return JsonResponse({'message': 'CSRF cookie set'})
+
+
+def autocomplete(request):
+    params = [
+        ("q", request.GET.get('q')),
+        ("type[]", "stop_area")
+    ]
+    data = ask_sncf('places', params)
+    return JsonResponse(data)

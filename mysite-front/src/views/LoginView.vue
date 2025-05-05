@@ -40,7 +40,7 @@ async function login(formData) {
       withCredentials: true // 🔥 Important pour les cookies
     })
     console.log('Connecté !', response)
-    useLinksStore().updateLinks(true) // Update the header links
+    useLinksStore().updateLinks(true, formData.username) // Update the header links
     await router.push('/dashboard')
   } catch (err) {
     console.error('Erreur de connexion', err)
