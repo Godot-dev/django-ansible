@@ -26,7 +26,7 @@
         <button type="submit">Add</button>
 
         <ul>
-
+          <li v-for="field in fields" :key="field.name"></li>
         </ul>
       </form>
 
@@ -59,7 +59,6 @@ import 'vue-multiselect/dist/vue-multiselect.css'
 import Cookies from 'js-cookie'
 
 const API_URL = inject('API_URL');
-
 
 const selectedStation = ref({})
 const suggestions = ref([])
